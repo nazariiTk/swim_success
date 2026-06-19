@@ -6,6 +6,7 @@ import 'pace_state.dart';
 class PaceCubit extends Cubit<PaceState> {
   static const int minPaceSeconds = 45; // 0:45
   static const int maxPaceSeconds = 240; // 4:00
+  static const int maxSecondsLimit = 59;
 
   // Milestone values for UI slider track and labels
   static const List<double> sliderMilestoneValues = [45.0, 70.0, 90.0, 120.0, 180.0, 240.0];

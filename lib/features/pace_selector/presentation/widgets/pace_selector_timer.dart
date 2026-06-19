@@ -7,10 +7,7 @@ import '../cubit/pace_state.dart';
 class PaceSelectorTimer extends StatefulWidget {
   final Color levelColor;
 
-  const PaceSelectorTimer({
-    super.key,
-    required this.levelColor,
-  });
+  const PaceSelectorTimer({super.key, required this.levelColor});
 
   @override
   State<PaceSelectorTimer> createState() => _PaceSelectorTimerState();
@@ -26,8 +23,8 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
   void initState() {
     super.initState();
     final cubit = context.read<PaceCubit>();
-    final initialMin = cubit.state.totalSeconds ~/ 60;
-    final initialSec = cubit.state.totalSeconds % 60;
+    final initialMin = cubit.state.totalSeconds ~/ PaceCubit.minutesToSeconds;
+    final initialSec = cubit.state.totalSeconds % PaceCubit.minutesToSeconds;
 
     _minController = TextEditingController(text: initialMin.toString());
     _secController = TextEditingController(
@@ -63,12 +60,12 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
 
   void _updateFromSecString(String val) {
     final sec = int.tryParse(val) ?? 0;
-    if (sec > 59) {
-      _secController.text = '59';
+    if (sec > PaceCubit.maxSecondsLimit) {
+      _secController.text = '${PaceCubit.maxSecondsLimit}';
       _secController.selection = TextSelection.fromPosition(
         const TextSelection.collapsed(offset: 2).base,
       );
-      context.read<PaceCubit>().updateSeconds(59);
+      context.read<PaceCubit>().updateSeconds(PaceCubit.maxSecondsLimit);
     } else {
       context.read<PaceCubit>().updateSeconds(sec);
     }
@@ -80,15 +77,18 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
     final shadowColor = textColor.withValues(alpha: 0.25);
 
     return BlocListener<PaceCubit, PaceState>(
-      listenWhen: (previous, current) => previous.totalSeconds != current.totalSeconds,
+      listenWhen: (previous, current) =>
+          previous.totalSeconds != current.totalSeconds,
       listener: (context, state) {
-        final minutes = state.totalSeconds ~/ 60;
-        final seconds = state.totalSeconds % 60;
+        final minutes = state.totalSeconds ~/ PaceCubit.minutesToSeconds;
+        final seconds = state.totalSeconds % PaceCubit.minutesToSeconds;
 
-        if (!_minFocusNode.hasFocus && int.tryParse(_minController.text) != minutes) {
+        if (!_minFocusNode.hasFocus &&
+            int.tryParse(_minController.text) != minutes) {
           _minController.text = minutes.toString();
         }
-        if (!_secFocusNode.hasFocus && int.tryParse(_secController.text) != seconds) {
+        if (!_secFocusNode.hasFocus &&
+            int.tryParse(_secController.text) != seconds) {
           _secController.text = seconds.toString().padLeft(2, '0');
         }
       },
@@ -133,10 +133,7 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                           fontWeight: FontWeight.w400,
                           color: textColor,
                           shadows: [
-                            Shadow(
-                              color: shadowColor,
-                              blurRadius: 12.0,
-                            ),
+                            Shadow(color: shadowColor, blurRadius: 12.0),
                           ],
                         ),
                         textAlign: TextAlign.center,
@@ -158,10 +155,7 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 36,
-                      ),
+                      icon: const Icon(Icons.keyboard_arrow_down, size: 36),
                       onPressed: () {
                         context.read<PaceCubit>().decrementMinutes();
                       },
@@ -220,10 +214,7 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                           fontWeight: FontWeight.w400,
                           color: textColor,
                           shadows: [
-                            Shadow(
-                              color: shadowColor,
-                              blurRadius: 12.0,
-                            ),
+                            Shadow(color: shadowColor, blurRadius: 12.0),
                           ],
                         ),
                         textAlign: TextAlign.center,
@@ -245,10 +236,7 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 36,
-                      ),
+                      icon: const Icon(Icons.keyboard_arrow_down, size: 36),
                       onPressed: () {
                         context.read<PaceCubit>().decrementSeconds();
                       },
