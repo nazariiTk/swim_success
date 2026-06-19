@@ -5,11 +5,15 @@ import '../../features/users/data/repositories/user_repository_impl.dart';
 import '../../features/users/domain/repositories/user_repository.dart';
 import '../../features/users/domain/usecases/get_users.dart';
 import '../../features/users/presentation/cubit/users_cubit.dart';
+import '../../features/pace_selector/presentation/cubit/pace_cubit.dart';
 import '../network/api_constants.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  // Features - Pace Selector
+  sl.registerFactory(() => PaceCubit());
+
   // Features - Users
   // Cubit
   sl.registerFactory(() => UsersCubit(getUsersUseCase: sl()));
