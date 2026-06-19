@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/swimmer_level.dart';
+import '../cubit/pace_cubit.dart';
 
 class SegmentedSliderTrackShape extends SliderTrackShape {
   final SwimmerLevel currentLevel;
@@ -62,9 +63,9 @@ class SegmentedSliderTrackShape extends SliderTrackShape {
 
     final Paint paint = Paint()..style = PaintingStyle.fill;
 
-    const double minVal = 45.0;
-    const double maxVal = 240.0;
-    const double totalRange = maxVal - minVal;
+    final double minVal = PaceCubit.minPaceSeconds.toDouble();
+    final double maxVal = PaceCubit.maxPaceSeconds.toDouble();
+    final double totalRange = maxVal - minVal;
 
     double getXForValue(double val) {
       final double fraction = (val - minVal) / totalRange;
@@ -72,10 +73,30 @@ class SegmentedSliderTrackShape extends SliderTrackShape {
     }
 
     final segments = [
-      _SegmentData(45.0, 69.5, SwimmerLevel.elite, eliteColor),
-      _SegmentData(69.5, 89.5, SwimmerLevel.advanced, advancedColor),
-      _SegmentData(89.5, 119.5, SwimmerLevel.intermediate, intermediateColor),
-      _SegmentData(119.5, 240.0, SwimmerLevel.beginner, beginnerColor),
+      _SegmentData(
+        minVal,
+        SwimmerLevel.eliteThreshold - 0.5,
+        SwimmerLevel.elite,
+        eliteColor,
+      ),
+      _SegmentData(
+        SwimmerLevel.eliteThreshold - 0.5,
+        SwimmerLevel.advancedThreshold - 0.5,
+        SwimmerLevel.advanced,
+        advancedColor,
+      ),
+      _SegmentData(
+        SwimmerLevel.advancedThreshold - 0.5,
+        SwimmerLevel.intermediateThreshold - 0.5,
+        SwimmerLevel.intermediate,
+        intermediateColor,
+      ),
+      _SegmentData(
+        SwimmerLevel.intermediateThreshold - 0.5,
+        maxVal,
+        SwimmerLevel.beginner,
+        beginnerColor,
+      ),
     ];
 
     for (final seg in segments) {

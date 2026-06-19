@@ -7,6 +7,10 @@ class PaceCubit extends Cubit<PaceState> {
   static const int minPaceSeconds = 45; // 0:45
   static const int maxPaceSeconds = 240; // 4:00
 
+  // Milestone values for UI slider track and labels
+  static const List<double> sliderMilestoneValues = [45.0, 70.0, 90.0, 120.0, 180.0, 240.0];
+  static const List<String> sliderMilestoneLabels = ['0:45', '1:10', '1:30', '2:00', '3:00', '4:00'];
+
   final SubmitPaceUseCase submitPaceUseCase;
 
   PaceCubit({required this.submitPaceUseCase})

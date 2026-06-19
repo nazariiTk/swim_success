@@ -152,8 +152,8 @@ class PaceSelectorView extends StatelessWidget {
                   SliderLabels(
                     min: PaceCubit.minPaceSeconds.toDouble(),
                     max: PaceCubit.maxPaceSeconds.toDouble(),
-                    values: const [45.0, 70.0, 90.0, 120.0, 180.0, 240.0],
-                    labelTexts: const ['0:45', '1:10', '1:30', '2:00', '3:00', '4:00'],
+                    values: PaceCubit.sliderMilestoneValues,
+                    labelTexts: PaceCubit.sliderMilestoneLabels,
                   ),
 
                   const SizedBox(height: 40),
