@@ -76,6 +76,9 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).colorScheme.onSurface;
+    final shadowColor = textColor.withValues(alpha: 0.25);
+
     return BlocListener<PaceCubit, PaceState>(
       listenWhen: (previous, current) => previous.totalSeconds != current.totalSeconds,
       listener: (context, state) {
@@ -128,10 +131,10 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                         style: TextStyle(
                           fontSize: 64,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                          color: textColor,
                           shadows: [
                             Shadow(
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: shadowColor,
                               blurRadius: 12.0,
                             ),
                           ],
@@ -215,10 +218,10 @@ class _PaceSelectorTimerState extends State<PaceSelectorTimer> {
                         style: TextStyle(
                           fontSize: 64,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                          color: textColor,
                           shadows: [
                             Shadow(
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: shadowColor,
                               blurRadius: 12.0,
                             ),
                           ],

@@ -77,12 +77,12 @@ class PaceSelectorView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Header
-                  const Text(
+                  Text(
                     "What's your fastest\n100m freestyle?",
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSurface,
                       height: 1.2,
                     ),
                   ),
