@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/debouncer.dart';
 import '../cubit/users_cubit.dart';
@@ -47,9 +48,7 @@ class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Users Directory'),
-      ),
+      appBar: AppBar(title: const Text('Users Directory')),
       body: Column(
         children: [
           Padding(
@@ -82,9 +81,8 @@ class _UsersViewState extends State<UsersView> {
               builder: (context, state) {
                 return state.when(
                   initial: () => const SizedBox.shrink(),
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (message) => Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -130,7 +128,8 @@ class _UsersViewState extends State<UsersView> {
                         await context.read<UsersCubit>().fetchUsers();
                       },
                       child: ListView.builder(
-                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: filteredUsers.length,
                         itemBuilder: (context, index) {
@@ -138,13 +137,7 @@ class _UsersViewState extends State<UsersView> {
                           return UserCard(
                             user: user,
                             onTap: () {
-                              // Navigation details will be implemented in subsequent tasks
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Selected user: ${user.name}'),
-                                  duration: const Duration(seconds: 1),
-                                ),
-                              );
+                              context.push('/user-detail', extra: user);
                             },
                           );
                         },

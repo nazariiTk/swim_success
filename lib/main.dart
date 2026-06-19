@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'core/di/injection_container.dart' as di;
+import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'features/users/presentation/pages/users_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,12 +14,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Users Directory',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const UsersPage(),
+      routerConfig: appRouter,
     );
   }
 }
